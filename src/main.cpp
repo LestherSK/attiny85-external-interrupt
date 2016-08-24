@@ -32,18 +32,35 @@ int main(void) {
   PCMSK |= _BV(PCINT3);
   GIMSK |= _BV(PCIE);
 
-  sei();
-
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
   while (1) {
     if (interrupt) {
-      uart_puts("INTERRUPT");
+      uart_puts("INTERRUPT has occurred");
       interrupt = false;
+
+      // Let's wait 5000 ms before going sleep again. Just wanted to have enough time to measure current in
+      // non-sleep mode :).
+      _delay_ms(5000);
     } else {
       uart_puts("NO INTERRUPT");
-      _delay_ms(1000);
     }
+
+    uart_puts("Sleeping...");
+
+    PORTB &= ~_BV(DDB0);
+
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+    cli();
+    sleep_enable();
+    sei();
+    sleep_cpu();
+    sleep_disable();
+    sei();
+
+    PORTB |= _BV(DDB0);
+
+    uart_puts("Waking!");
   }
 #pragma clang diagnostic pop
 }
