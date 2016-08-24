@@ -1,6 +1,6 @@
 # General
 
-Basic ATTiny85 firmware to wake MCU up from sleep via external interrupt based on photocell + MOSFET setup.
+Basic ATTiny85 firmware to wake MCU up from sleep via external interrupt based on photocell + MOSFET setup (see `docs/` folder for the sketch).
 
 Project template is generated with the following command:
 
@@ -8,7 +8,7 @@ Project template is generated with the following command:
 platformio init --ide clion --board attiny85
 ```
 
-Source code is uploaded to microcontroller via Arduino UNO ISP, see `platformio.ini`:
+Source code is uploaded to MCU via Arduino UNO ISP, see `platformio.ini`:
 
 ```
 [env:attiny85]
